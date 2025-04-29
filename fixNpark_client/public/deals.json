@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "1",
+    "serviceName": "Premium Car Wash",
+    "discount": "9%",
+    "validity": "Wed Feb 26 2025",
+    "providerName": "Sparkle Auto Services"
+  },
+  {
+    "_id": "2",
+    "serviceName": "Oil Change & Checkup",
+    "discount": "4%",
+    "validity": "Mon Apr 14 2025",
+    "providerName": "QuickFix Garage"
+  },
+  {
+    "_id": "3",
+    "serviceName": "Tire Rotation",
+    "discount": "8%",
+    "validity": "Fri Jan 10 2025",
+    "providerName": "Wheely Good Service"
+  },
+  {
+    "_id": "4",
+    "serviceName": "Full Service Maintenance",
+    "discount": "6%",
+    "validity": "Sun May 18 2025",
+    "providerName": "AutoCare Experts"
+  },
+  {
+    "_id": "5",
+    "serviceName": "Battery Replacement",
+    "discount": "10%",
+    "validity": "Thu Mar 6 2025",
+    "providerName": "PowerUp Batteries"
+  },
+  {
+    "_id": "6",
+    "serviceName": "Brake Inspection",
+    "discount": "9%",
+    "validity": "Tue Dec 31 2024",
+    "providerName": "SafeRide Mechanics"
+  },
+  {
+    "_id": "7",
+    "serviceName": "Air Filter Replacement",
+    "discount": "2%",
+    "validity": "Sat Feb 8 2025",
+    "providerName": "BreatheEasy Auto"
+  },
+  {
+    "_id": "8",
+    "serviceName": "Wheel Alignment",
+    "discount": "4%",
+    "validity": "Wed May 14 2025",
+    "providerName": "AlignPro Services"
+  },
+  {
+    "_id": "9",
+    "serviceName": "Parking Spot Booking",
+    "discount": "8%",
+    "validity": "Thu Mar 20 2025",
+    "providerName": "ParkEase Solutions"
+  },
+  {
+    "_id": "10",
+    "serviceName": "Engine Diagnostics",
+    "discount": "3%",
+    "validity": "Mon Jan 27 2025",
+    "providerName": "TechTune Garage"
+  },
+  {
+    "_id": "11",
+    "serviceName": "Interior Cleaning",
+    "discount": "6%",
+    "validity": "Tue Mar 11 2025",
+    "providerName": "Sparkle Auto Services"
+  },
+  {
+    "_id": "12",
+    "serviceName": "Window Tinting",
+    "discount": "9%",
+    "validity": "Sun Apr 7 2025",
+    "providerName": "QuickFix Garage"
+  },
+  {
+    "_id": "13",
+    "serviceName": "Headlight Restoration",
+    "discount": "6%",
+    "validity": "Thu May 1 2025",
+    "providerName": "BrightVision Auto"
+  },
+  {
+    "_id": "14",
+    "serviceName": "Transmission Service",
+    "discount": "5%",
+    "validity": "Sat Feb 15 2025",
+    "providerName": "TechTune Garage"
+  },
+  {
+    "_id": "15",
+    "serviceName": "AC Repair & Recharge",
+    "discount": "10%",
+    "validity": "Fri Jan 17 2025",
+    "providerName": "CoolRide AutoCare"
+  },
+  {
+    "_id": "16",
+    "serviceName": "Car Polishing",
+    "discount": "7%",
+    "validity": "Wed Mar 5 2025",
+    "providerName": "Sparkle Auto Services"
+  },
+  {
+    "_id": "17",
+    "serviceName": "Car Upholstery Repair",
+    "discount": "4%",
+    "validity": "Mon Feb 3 2025",
+    "providerName": "Wheely Good Service"
+  },
+  {
+    "_id": "18",
+    "serviceName": "Emergency Roadside Assistance",
+    "discount": "7%",
+    "validity": "Fri Apr 19 2025",
+    "providerName": "SafeRide Mechanics"
+  },
+  {
+    "_id": "19",
+    "serviceName": "Hybrid Battery Diagnostics",
+    "discount": "6%",
+    "validity": "Thu Apr 25 2025",
+    "providerName": "PowerUp Batteries"
+  },
+  {
+    "_id": "20",
+    "serviceName": "Advanced Engine Tuning",
+    "discount": "4%",
+    "validity": "Sun May 20 2025",
+    "providerName": "TechTune Garage"
+  }
+]

@@ -1,0 +1,27 @@
+[
+    {
+      "question": "How do I find available parking spots?",
+      "answer": "Use the web app's search feature to find available parking spaces near you in real-time. It updates dynamically to show only vacant spots. This ensures you can plan your parking with ease and save time."
+    },
+    {
+      "question": "What payment methods are accepted?",
+      "answer": "Our apps accept major credit and debit cards for convenience. Many also support mobile wallets like Google Pay or Apple Pay. In some locations, cash payments may also be an option."
+    },
+    {
+      "question": "Can I reserve a parking spot in advance?",
+      "answer": "Yes, Our parking apps allow you to secure a parking spot before you arrive. This guarantees availability at your chosen location. Advance reservations can often save you money and stress."
+    },
+    {
+      "question": "How do I cancel a reservation?",
+      "answer": "You can cancel a reservation directly through the app in the bookings section. Refund policies vary and are usually displayed during cancellation. Make sure to cancel within the allowable time to avoid penalties."
+    },
+    {
+      "question": "Are there any additional fees or charges?",
+      "answer": "Our apps may charge convenience or processing fees for their services. These charges are typically shown clearly before you confirm payment. Additional fees may also apply for premium features or reservations."
+    },
+    {
+      "question": "Is there a customer support contact available?",
+      "answer": "Yes, customer support contact options are usually available in the help or support section of the app. You can typically reach out via email, chat, or phone. Support teams are ready to assist with issues or queries."
+    }
+  ]
+

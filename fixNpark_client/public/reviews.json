@@ -1,0 +1,72 @@
+[
+  {
+    "_id": "1",
+    "username": "JohnDoe",
+    "email": "johndoe@example.com",
+    "rating": 5,
+    "review": "Excellent service! The booking process was smooth and the parking spot was exactly as described. Highly recommend!"
+  },
+  {
+    "_id": "2",
+    "username": "JaneSmith",
+    "email": "janesmith@example.com",
+    "rating": 4,
+    "review": "Great experience! The parking spot was easy to find and secure. Would love more options in my area."
+  },
+  {
+    "_id": "3",
+    "username": "MarkT",
+    "email": "markt@example.com",
+    "rating": 3,
+    "review": "The service was okay, but there was a bit of confusion with my reservation. It took a little longer to find a spot."
+  },
+  {
+    "_id": "4",
+    "username": "SarahLee",
+    "email": "sarahlee@example.com",
+    "rating": 5,
+    "review": "Super easy to use and very convenient! I loved how fast the system is. Will definitely use it again."
+  },
+  {
+    "_id": "5",
+    "username": "MichaelJ",
+    "email": "michaelj@example.com",
+    "rating": 4,
+    "review": "A reliable service with good deals. The process was simple, but I would love to see more real-time updates."
+  },
+  {
+    "_id": "6",
+    "username": "OliviaW",
+    "email": "oliviaw@example.com",
+    "rating": 5,
+    "review": "Best parking app I've used! Quick and simple to find and book a spot. Plus, the discounts are awesome."
+  },
+  {
+    "_id": "7",
+    "username": "DavidP",
+    "email": "davidp@example.com",
+    "rating": 2,
+    "review": "Had a couple of issues with the app not showing the right availability. The support team was helpful, though."
+  },
+  {
+    "_id": "8",
+    "username": "EmilyB",
+    "email": "emilyb@example.com",
+    "rating": 4,
+    "review": "Overall good experience, but it would be great to have more payment options available. Parking space was fine."
+  },
+  {
+    "_id": "9",
+    "username": "TomR",
+    "email": "tomr@example.com",
+    "rating": 3,
+    "review": "Service was okay, but I expected better pricing for the area I was in. It was still decent overall."
+  },
+  {
+    "_id": "10",
+    "username": "NatalieS",
+    "email": "natalies@example.com",
+    "rating": 5,
+    "review": "I loved the easy navigation and quick booking process! The parking was safe and conveniently located."
+  }
+]

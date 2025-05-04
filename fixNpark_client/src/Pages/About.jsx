@@ -1,15 +1,16 @@
-import AboutUs from "../Components/AboutUs/AboutUs";
-import CoreFeatures from "../Components/AboutUs/CoreFeatures";
+import AboutUsBanner from "../Components/AboutUs/AboutUsBanner/AboutUsBanner";
+import Achievement from "../Components/AboutUs/Achievement/Achievement";
 import FAQ from "../Components/AboutUs/FAQ";
-import Pricing from "../Components/Pricing";
+import TeamSection from "../Components/AboutUs/TeamMember/TeamSection";
+
 
 
 const About = () => {
     return (
         <div>
-            <CoreFeatures></CoreFeatures>
-            <Pricing></Pricing>
-            <AboutUs></AboutUs> 
+            <AboutUsBanner></AboutUsBanner>
+           <Achievement></Achievement>
+           <TeamSection></TeamSection>
             <FAQ></FAQ>
         </div>
     );

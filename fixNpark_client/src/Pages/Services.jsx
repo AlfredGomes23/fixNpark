@@ -1,41 +1,19 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import '../Styles/swiper.css';
-
-// import required modules
-import { Navigation } from 'swiper/modules';
 import ServicesList from '../Components/ServicesList';
 import ContactUsSection from '../Components/ContactUS';
+import ServiceSection from '../Components/ServiceSection/ServiceSection';
+import RequestForm from '../Components/ServiceSection/RequestForm';
+import OurServices from '../Components/ServiceSection/OurServices';
+import ServiceBanner from '../Components/ServiceSection/ServiceBanner';
 
 
 const Services = () => {
     return (
         <div>
-            <div className='my-5'>
-                <Swiper
-                    slidesPerView={2}
-                    spaceBetween={30}
-                    loop={true}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    navigation={true}
-                    modules={[Navigation]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><img src="../../public/images/services (1).jpg" alt="" /></SwiperSlide>
-                    <SwiperSlide><img src="../../public/images/services (2).jpg" alt="" /></SwiperSlide>
-                    <SwiperSlide><img src="../../public/images/services (3).jpg" alt="" /></SwiperSlide>
-                    <SwiperSlide><img src="../../public/images/services (4).jpg" alt="" /></SwiperSlide>
-                </Swiper>
-            </div>
-            <ServicesList></ServicesList>
-            <ContactUsSection></ContactUsSection>
+        <ServiceBanner></ServiceBanner>
+            <ServiceSection></ServiceSection>
+            <RequestForm></RequestForm>
+            <OurServices></OurServices>
         </div>
     );
 };

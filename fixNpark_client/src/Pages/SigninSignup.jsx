@@ -53,6 +53,20 @@ const SigninSignup = () => {
 
         try {
             await createUser(data.email, data.password);
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                photoUrl: data.url, // Ensure this is collected in your form
+                role: "user",            // Optional: Add default role
+                createdAt: new Date()
+            };
+            await fetch("http://localhost:5000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userInfo)
+            });
             Swal.fire({
                 position: "center",
                 icon: "success",

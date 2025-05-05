@@ -1,4 +1,3 @@
-
 import SectionHeader from "../Components/SectionHeader";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,18 +22,58 @@ const Parking = () => {
 
     // getting parking data
     useEffect(() => {
-        const queryParams = new URLSearchParams(search).toString();
+        const fetchData = async () => {
+            try {
+                const queryParams = new URLSearchParams(search).toString();
+                const res = await fetch(`http://localhost:5000/search-parkings?${queryParams}`);
+                const result = await res.json();
 
-        fetch(`http://localhost:5000/parkings?${queryParams}`)
-            .then(r => r.json()).then(d => setParkings(d.data))
+                if (result.success) {
+                    setParkings(result.data); // Update state with fetched data
+                } else {
+                    console.warn("Fallback data loaded due to server error.");
+                    setParkings(result.data); // Still set data even in error fallback
+                }
+            } catch (err) {
+                console.error("Failed to fetch parking data:", err);
+            }
+        };
 
+        fetchData();
     }, [search, refresh]);
 
-    const onSearch = async data => {
-        console.log(data);
-        await setSearch(data);
+    const onSearch = async (data) => {
+        console.log("Search data:", data);
+        setSearch(data); 
+
+        const { search, subscription, parkingType, wheels, provider } = data;
+
+        const params = new URLSearchParams({
+            search,
+            subscription,
+            parkingType,
+            wheels,
+            provider,
+        }).toString();
+        console.log(params);
+
+        try {
+            const res = await fetch(`/search-parkings?${params}`);
+            const result = await res.json();
+
+            if (result.success) {
+                setParkings(result.data);
+            } else {
+                console.warn("Fallback data used due to server error.");
+                setParkings(result.data); // fallback data
+            }
+        } catch (err) {
+            console.error("Error fetching parkings:", err);
+        }
     };
-    // console.log(parkings);
+
+
+    console.log(parkings);
 
     const onAdd = async data => {
         data.userEmail = user?.email;
@@ -83,7 +122,7 @@ const Parking = () => {
             });
             const data = await res.json();
             if (data.deletedCount > 0) {
-                document.getElementById(`modal_card_${id}`).close(); // ✅ Close the modal
+                document.getElementById(`modal_card_${id}`).close();
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -91,7 +130,7 @@ const Parking = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                setRefresh(refresh + 1); // Optional: trigger re-render
+                setRefresh(refresh + 1); 
             }
         } catch (err) {
             console.error(err);
@@ -118,7 +157,7 @@ const Parking = () => {
                         <button className="btn text-blue-950 border-none bg-yellow-400" onClick={() => document.getElementById('addParkingModal').showModal()}>List Your <br /> Parking Space</button>
 
                         {/* modal here */}
-                        <dialog id="addParkingModal" className="modal"> 
+                        <dialog id="addParkingModal" className="modal">
                             <form className="modal-box text-center bg-yellow-50 " onSubmit={handleAddParking(onAdd)}>
                                 <h3 className="font-bold text-2xl text-blue-950">List Your Parking, While it's not in Use.</h3>
 
@@ -143,7 +182,7 @@ const Parking = () => {
                                     </select>
                                 </div>
 
-                                <select className="select select-bordered px-2 mb-10 w-96"  {...addParkingForm("parkingQuantity")}  required >
+                                <select className="select select-bordered px-2 mb-10 w-96"  {...addParkingForm("parkingQuantity")} required >
                                     <option>Single Parking</option>
                                     <option disabled>Bulk Parking (Contact Admin to List Bulk Parking)</option>
                                 </select>
@@ -176,8 +215,9 @@ const Parking = () => {
 
                         <select className="select select-bordered w-full" {...searchForm("subscription")} required>
                             <option>Subscription</option>
-                            <option>for Hourly</option>
-                            <option>for Monthly</option>
+                            <option>for Hours</option>
+                            <option>for Days</option>
+                            <option>for Months</option>
                         </select>
 
                         <select className="select select-bordered w-full" {...searchForm("parkingType")} required>
@@ -189,7 +229,7 @@ const Parking = () => {
                         <select className="select select-bordered w-full" {...searchForm("wheels")} required>
                             <option>Any Number of Wheeler</option>
                             <option>Two Wheeler</option>
-                            <option>Four Wheeler</option>
+                            <option>Three Wheeler or More</option>
                         </select>
 
                         <select className="select select-bordered w-full" {...searchForm("provider")} required>

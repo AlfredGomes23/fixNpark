@@ -38,52 +38,60 @@ async function run() {
         })
 
         // parkings api's
-        app.get('/parkings', async (req, res) => {
+        app.get('/search-parkings', async (req, res) => {
             const { search, subscription, parkingType, wheels, provider } = req.query;
+            console.log("Received query:", search, subscription, parkingType, wheels, provider, req.query);
 
             try {
                 const query = {};
 
+                // Filter by address if search is not 'All'
                 if (search && search.toLowerCase() !== "all") {
                     query.address = { $regex: search, $options: "i" };
                 }
 
-                if (subscription && subscription !== "Any Subscription") {
+                // Filter by subscription if it's not the default value
+                if (subscription && subscription !== "Subscription" && subscription !== "All") {
                     query.subscription = subscription;
                 }
 
-                if (parkingType && parkingType !== "Both Single and Bulk") {
+                if (parkingType && parkingType !== "Single and Bulk" && parkingType !== "All") {
                     query.parkingType = parkingType;
                 }
 
-                if (wheels && wheels !== "Any Number of Wheeler") {
+                if (wheels && wheels !== "Any Number of Wheeler" && wheels !== "All") {
                     query.wheels = wheels;
                 }
 
-                if (provider && provider !== "All Provider") {
+                if (provider && provider !== "All Provider" && provider !== "All") {
                     query.provider = provider;
                 }
 
-                query.bookedUser = { $exists: false };
-                query.bookedUser = null; // OR ensures 'bookedUser' is null
+                // Only show parkings that are not yet booked
+                query.bookedUser = { $in: [null, undefined] };
 
-                console.log("Filters applied: ", query);
+                console.log("MongoDB query:", query);
 
                 const result = await parkings.find(query).toArray();
 
                 res.send({ success: true, data: result });
-            } catch (error) {
-                console.error("Error fetching parkings: ", error);
 
+            } catch (error) {
+                console.error("Error fetching parkings:", error);
+
+                // fallback: return all parkings
                 const allData = await parkings.find().toArray();
 
                 res.send({
                     success: false,
                     error: "An error occurred while fetching filtered data.",
-                    data: allData, // Send all parking data for fallback
+                    data: allData
                 });
             }
         });
+
+
+
 
 
         app.post('/parking/add', async (req, res) => {
@@ -117,6 +125,18 @@ async function run() {
 
             res.send(result)
         });
+
+        app.post('/users', async (req, res) => {
+            const newUser = req.body;
+            const result = await users.insertOne(newUser);
+            res.send(result);
+        });
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = await users.findOne({ email });
+            res.send(user);
+        });
+
 
 
         // Send a ping to confirm a successful connection

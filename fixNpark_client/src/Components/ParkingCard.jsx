@@ -7,7 +7,7 @@ import { AuthContext } from "../Providers/AuthProvider";
 const ParkingCard = ({ parking, onDelete }) => {
 
     const { user } = useContext(AuthContext);
-    console.log(parking?.subscription);
+    
     function formatDate(isoString) {
         const date = new Date(isoString);
 
@@ -27,7 +27,7 @@ const ParkingCard = ({ parking, onDelete }) => {
         <div>
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
             <div className="" onClick={() => document.getElementById(`modal_card_${parking._id}`).showModal()}>
-                <div className="card image-full w-80 border border-yellow-300">
+                <div className="card image-full w-80 border border-yellow-300 h-52">
                     <figure>
                         <img
                             src={`${parking?.photoUrl}`}
@@ -36,14 +36,14 @@ const ParkingCard = ({ parking, onDelete }) => {
                     <div className="card-body">
                         <h2 className="card-title">
                             <FaMapLocationDot />{parking?.address}
-                            <div className="badge badge-secondary badge-xs text-xs">{formatDate(parking?.date)}</div>
+                            <div className="badge text-yellow-300 badge-outline badge-xs text-xs">{formatDate(parking?.date)}</div>
                         </h2>
-                        <p>{parking?.details.length > 128 ? parking?.details.slice(0, 20) + '...' : parking?.details}</p>
+                        <p>{parking?.details.length > 45 ? parking?.details.slice(0, 45) + '...' : parking?.details}</p>
                         <ul className="card-actions justify-end text-xs">
-                            <li className="badge badge-primary badge-outline badge-xs">{parking?.subscription}</li>
-                            <li className="badge badge-primary badge-outline badge-xs">{parking?.parkingQuantity}</li>
-                            <li className="badge badge-primary badge-outline badge-xs">{parking?.wheels}</li>
-                            <li className="badge badge-primary badge-outline badge-xs">{parking?.provider}</li>
+                            <li className="badge badge-outline badge-xs">{parking?.subscription}</li>
+                            <li className="badge badge-outline badge-xs">{parking?.parkingQuantity}</li>
+                            <li className="badge badge-outline badge-xs">{parking?.wheels}</li>
+                            <li className="badge badge-outline badge-xs">{parking?.provider}</li>
                         </ul>
                     </div>
                 </div>

@@ -1,11 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from 'sweetalert2'
 
 const Navbar = () => {
     const { user, sign_out } = useContext(AuthContext);
-
+    const [userData, setUserData] = useState(null);
     const handleSignOut = async () => {
         try {
             await sign_out();
@@ -26,13 +26,18 @@ const Navbar = () => {
             });
         }
     };
+    useEffect(() => {
+        if (user?.email) {
+            fetch(`http://localhost:5000/users/${user.email}`)
+                .then(res => res.json())
+                .then(data => setUserData(data))
+                .catch(err => console.error(err));
+        }
+    }, [user?.email]);
+    console.log(user, userData);
 
     return (
-<<<<<<< HEAD
         <div className="z-0">
-=======
-        <div>
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
             <div className="bg-blue-950  py-4 ">
                 <div className='w-11/12 mx-auto  flex flex-col lg:flex-row justify-between items-center text-white text-sm px-2'>
                     <span className="font-semibold">Welcome to Online Parking Service</span>
@@ -50,23 +55,25 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 text-base font-medium gap-4">
                         <li><NavLink to="/">Home</NavLink></li>
                         <li><NavLink to="/parkings">Parking</NavLink></li>
-<<<<<<< HEAD
                         <li><NavLink to="/request-parking">Request</NavLink></li>
-=======
-                        {/* <li><NavLink to="/">ListParking</NavLink></li>
-                        <li><NavLink to="/">Request</NavLink></li> */}
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
                         <li><NavLink to="/services">Services</NavLink></li>
                         <li><NavLink to="/about">About</NavLink></li>
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <p>{user?.email && user?.email}</p>
-                    {
-                        user?.email ?
-                            <button onClick={handleSignOut} className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">SignOut</button>
-                            : <Link to="/signin-signup" className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">Login</Link>}
-                </div>
+
+                {
+                    user?.email ?
+                        <div>
+                            <div className="tooltip" data-tip={userData?.name}>
+                                <div className="avatar mr-4">
+                                    <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
+                                        <img src={userData?.photoUrl} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onClick={handleSignOut} className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">SignOut</button></div>
+                        : <Link to="/signin-signup" className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">Login</Link>}
             </div>
         </div>
     );

@@ -3,32 +3,19 @@ import { FaCheckCircle } from "react-icons/fa";
 const pricingPlans = [
   {
     name: "Basic Plan",
-<<<<<<< HEAD
     price: "৳99/hours(6)",
-=======
-    price: "$9.99/month",
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
     id: 1,
     description: "Best for occasional drivers who need affordable and reliable parking access.",
     features: [
       "Access to standard parking locations",
-<<<<<<< HEAD
       "Web app booking",
-=======
-      "Up to 20 hours of parking per month",
-      "Mobile app booking",
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
       "Real-time availability updates",
       "Basic customer support"
     ]
   },
   {
     name: "Premium Plan",
-<<<<<<< HEAD
     price: "৳199/day",
-=======
-    price: "$24.99/month",
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
     popular: true,
     id: 2,
     description: "Ideal for daily commuters who want flexible and premium parking features.",
@@ -36,28 +23,15 @@ const pricingPlans = [
       "Unlimited parking at participating locations",
       "Priority parking spots",
       "Advanced reservation access",
-<<<<<<< HEAD
-=======
-      "License plate recognition entry/exit",
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
       "Monthly usage analytics"
     ]
   },
   {
     name: "Business Plan",
-<<<<<<< HEAD
     price: "৳999/month",
     id: 3,
     description: "Designed for companies or teams that need managed, scalable parking for employees.",
     features: [
-=======
-    price: "$79.99/month",
-    id: 3,
-    description: "Designed for companies or teams that need managed, scalable parking for employees.",
-    features: [
-      "Includes 5 users (add more for $9.99/user)",
-      "Dedicated business dashboard",
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
       "Team usage insights & analytics",
       "Reserved parking during business hours",
       "Multi-location access",
@@ -106,13 +80,6 @@ const PricingCards = () => {
                 ))}
               </ul>
             </div>
-<<<<<<< HEAD
-=======
-
-            <button className="mt-auto w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold transition">
-              Choose {plan.name.split(" ")[0]}
-            </button>
->>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
           </div>
         ))}
       </div>

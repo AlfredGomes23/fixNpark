@@ -28,7 +28,11 @@ const Navbar = () => {
     };
 
     return (
+<<<<<<< HEAD
         <div className="z-0">
+=======
+        <div>
+>>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
             <div className="bg-blue-950  py-4 ">
                 <div className='w-11/12 mx-auto  flex flex-col lg:flex-row justify-between items-center text-white text-sm px-2'>
                     <span className="font-semibold">Welcome to Online Parking Service</span>
@@ -46,7 +50,12 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 text-base font-medium gap-4">
                         <li><NavLink to="/">Home</NavLink></li>
                         <li><NavLink to="/parkings">Parking</NavLink></li>
+<<<<<<< HEAD
                         <li><NavLink to="/request-parking">Request</NavLink></li>
+=======
+                        {/* <li><NavLink to="/">ListParking</NavLink></li>
+                        <li><NavLink to="/">Request</NavLink></li> */}
+>>>>>>> fd0c963728598e2fa279f6ed5b2cf3f48fba9a04
                         <li><NavLink to="/services">Services</NavLink></li>
                         <li><NavLink to="/about">About</NavLink></li>
                     </ul>

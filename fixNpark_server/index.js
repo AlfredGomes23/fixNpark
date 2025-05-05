@@ -92,6 +92,17 @@ async function run() {
             res.send(result);
         });
 
+        app.delete('/parking/delete/:id', async (req, res) => {
+            const id = req.params.id;
+            try {
+                const query = { _id: new ObjectId(id) };
+                const result = await parkings.deleteOne(query);
+                res.send(result); // result.deletedCount will be 1 if successful
+            } catch (error) {
+                res.status(500).send({ error: 'Failed to delete parking item.' });
+            }
+        });
+
         //contact us
         app.post('/contact', async (req, res) => {
             const { email, message } = req.body;

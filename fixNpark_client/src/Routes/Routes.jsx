@@ -8,6 +8,8 @@ import SigninSignup from "../Pages/SigninSignup";
 import PrivateRoutes from "./PrivateRoutes";
 import Parking from "../Pages/Parking";
 import Services from "../Pages/Services";
+import ListParking from "../Pages/ListParking";
+import RequestParking from "../Pages/RequestParking";
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +28,12 @@ export const router = createBrowserRouter([
                 path: '/parkings',
                 element: <PrivateRoutes>
                     <Parking></Parking>
+                </PrivateRoutes>
+            },
+            {
+                path: '/request-parking',
+                element: <PrivateRoutes>
+                    <RequestParking></RequestParking>
                 </PrivateRoutes>
             },
             {

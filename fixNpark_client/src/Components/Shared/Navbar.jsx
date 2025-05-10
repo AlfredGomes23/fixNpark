@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Providers/AuthProvider";
+import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from 'sweetalert2'
+import Avatar from "./Avatar";
 
 const Navbar = () => {
     const { user, sign_out } = useContext(AuthContext);
@@ -33,8 +34,7 @@ const Navbar = () => {
                 .then(data => setUserData(data))
                 .catch(err => console.error(err));
         }
-    }, [user?.email]);
-    console.log(user, userData);
+    }, [user]);
 
     return (
         <div className="z-0">
@@ -60,17 +60,10 @@ const Navbar = () => {
                         <li><NavLink to="/about">About</NavLink></li>
                     </ul>
                 </div>
-
                 {
                     user?.email ?
                         <div>
-                            <div className="tooltip" data-tip={userData?.name}>
-                                <div className="avatar mr-4">
-                                    <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
-                                        <img src={userData?.photoUrl} />
-                                    </div>
-                                </div>
-                            </div>
+                            <Avatar userData={userData} />
 
                             <button onClick={handleSignOut} className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">SignOut</button></div>
                         : <Link to="/signin-signup" className="btn btn-primary bg-blue-950 text-white hover:bg-white hover:text-yellow-400 px-3 py-2">Login</Link>}

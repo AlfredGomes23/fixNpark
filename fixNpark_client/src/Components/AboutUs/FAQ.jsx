@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp, FaQuestionCircle } from "react-icons/fa";
-import SectionHeader from "../SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 
 const AccordionItem = ({ faq, isOpen, onClick }) => {
   return (

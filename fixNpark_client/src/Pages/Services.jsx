@@ -1,16 +1,16 @@
+import OurServices from "../Components/Services/OurServices";
+import RequestForm from "../Components/Services/RequestForm";
+import ServiceBanner from "../Components/Services/ServiceBanner";
+import ServiceSection from "../Components/Services/ServiceSection";
 
-import ServicesList from '../Components/ServicesList';
-import ContactUsSection from '../Components/ContactUS';
-import ServiceSection from '../Components/ServiceSection/ServiceSection';
-import RequestForm from '../Components/ServiceSection/RequestForm';
-import OurServices from '../Components/ServiceSection/OurServices';
-import ServiceBanner from '../Components/ServiceSection/ServiceBanner';
+
+
 
 
 const Services = () => {
     return (
         <div>
-        <ServiceBanner></ServiceBanner>
+            <ServiceBanner></ServiceBanner>
             <ServiceSection></ServiceSection>
             <RequestForm></RequestForm>
             <OurServices></OurServices>

@@ -17,7 +17,6 @@ const SigninSignup = () => {
 
     const onSignin = async data => {
         setDoing(true);
-        // console.log(data);
 
         try {
             await signinUser(data.email, data.password);
@@ -31,7 +30,6 @@ const SigninSignup = () => {
             // navigate where user was going
             navigate(location?.state ? location.state : '/');
         } catch (err) {
-            // console.log(err);
             Swal.fire({
                 position: "center",
                 icon: "error",
@@ -49,15 +47,14 @@ const SigninSignup = () => {
 
     const onSignup = async data => {
         setDoing(true);
-        // console.log(data);
 
         try {
             await createUser(data.email, data.password);
             const userInfo = {
                 name: data.name,
-                email: data.email,
-                photoUrl: data.url, // Ensure this is collected in your form
-                role: "user",            // Optional: Add default role
+                email: data?.email?.toLowerCase(),
+                photoUrl: data.url,
+                role: "user",
                 createdAt: new Date()
             };
             await fetch("http://localhost:5000/users", {

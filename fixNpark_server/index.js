@@ -30,76 +30,89 @@ async function run() {
         // database collections
         const users = fixNparkDatabase.collection("users");
         const parkings = fixNparkDatabase.collection("parkings");
+        const booked = fixNparkDatabase.collection("booked");
+        const requested = fixNparkDatabase.collection("requested");
         const contactUs = fixNparkDatabase.collection("contactUs");
 
         // user's api's
-        app.get('/users', (req, res) => {
-            res.send();
-        })
-
-        // parkings api's
-        app.get('/search-parkings', async (req, res) => {
-            const { search, subscription, parkingType, wheels, provider } = req.query;
-            console.log("Received query:", search, subscription, parkingType, wheels, provider, req.query);
-
+        app.post('/users', async (req, res) => {
+            const newUser = req.body;
+            const result = await users.insertOne(newUser);
+            res.send(result);
+        });
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email.toLowerCase();
             try {
-                const query = {};
-
-                // Filter by address if search is not 'All'
-                if (search && search.toLowerCase() !== "all") {
-                    query.address = { $regex: search, $options: "i" };
+                const user = await users.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } });
+                if (!user) {
+                    return res.status(404).send({ success: false, message: "User not found" });
                 }
-
-                // Filter by subscription if it's not the default value
-                if (subscription && subscription !== "Subscription" && subscription !== "All") {
-                    query.subscription = subscription;
-                }
-
-                if (parkingType && parkingType !== "Single and Bulk" && parkingType !== "All") {
-                    query.parkingType = parkingType;
-                }
-
-                if (wheels && wheels !== "Any Number of Wheeler" && wheels !== "All") {
-                    query.wheels = wheels;
-                }
-
-                if (provider && provider !== "All Provider" && provider !== "All") {
-                    query.provider = provider;
-                }
-
-                // Only show parkings that are not yet booked
-                query.bookedUser = { $in: [null, undefined] };
-
-                console.log("MongoDB query:", query);
-
-                const result = await parkings.find(query).toArray();
-
-                res.send({ success: true, data: result });
-
+                res.send(user);
             } catch (error) {
-                console.error("Error fetching parkings:", error);
-
-                // fallback: return all parkings
-                const allData = await parkings.find().toArray();
-
-                res.send({
-                    success: false,
-                    error: "An error occurred while fetching filtered data.",
-                    data: allData
-                });
+                console.error("Error fetching user:", error);
+                res.status(500).send({ success: false, message: "Server error" });
             }
         });
 
-
-
-
-
+        // parking's  api's
         app.post('/parking/add', async (req, res) => {
             const newParking = req.body;
             const result = await parkings.insertOne(newParking);
             res.send(result);
         });
-
+        app.get('/search-parkings', async (req, res) => {
+            const now = new Date();
+            await parkings.deleteMany({
+                $expr: {
+                    $lt: [
+                        { $toDate: "$availableTill" },
+                        now
+                    ]
+                }
+            });
+            const { area, date, wheels, provider } = req.query;
+            try {
+                const query = {};
+                if (area && area !== "All") {
+                    query.area = area;
+                }
+                if (date && date !== "All") {
+                    const searchDate = new Date(date);
+                    query.$expr = {
+                        $and: [
+                            {
+                                $lte: [
+                                    { $dateTrunc: { date: { $toDate: "$availableFrom" }, unit: "day" } },
+                                    searchDate
+                                ]
+                            },
+                            {
+                                $gte: [
+                                    { $dateTrunc: { date: { $toDate: "$availableTill" }, unit: "day" } },
+                                    searchDate
+                                ]
+                            }
+                        ]
+                    };
+                }
+                if (wheels && wheels !== "Any") {
+                    query.wheels = wheels;
+                }
+                if (provider && provider !== "All") {
+                    query.provider = provider;
+                }
+                const result = await parkings.find(query).toArray();
+                res.send({ success: true, data: result });
+            } catch (error) {
+                console.error("Search error:", error);
+                const fallback = await parkings.find().toArray();
+                res.send({
+                    success: false,
+                    error: "Something went wrong. Sending all parkings as fallback.",
+                    data: fallback
+                });
+            }
+        });
         app.delete('/parking/delete/:id', async (req, res) => {
             const id = req.params.id;
             try {
@@ -111,32 +124,103 @@ async function run() {
             }
         });
 
-        //contact us
-        app.post('/contact', async (req, res) => {
-            const { email, message } = req.body;
+        // booked's api's
+        app.patch("/book-parking/:id", async (req, res) => {
+            const { id } = req.params;
+            const { bookedBy } = req.body;
 
-            const contactData = {
-                email,
-                message,
-                createdAt: new Date(),
-            };
+            try {
+                const parking = await parkings.findOne({ _id: new ObjectId(id) });
+                if (!parking) {
+                    return res.status(404).send({ success: false, message: "Parking not found" });
+                };
+                const now = new Date();
+                if (new Date(now.getTime() + 6 * 60 * 60 * 1000) > new Date(parking.availableTill)) {
+                    return res.status(400).send({
+                        success: false,
+                        message: "Booking requires at least 6 hours of remaining availability"
+                    });
+                }
+                const bookingData = {
+                    ...parking,
+                    bookedBy,
+                    bookedAt: now,
+                };
 
-            const result = await contactUs.insertOne(contactData);
+                await booked.insertOne(bookingData);
+                await parkings.deleteOne({ _id: new ObjectId(id) });
 
-            res.send(result)
+                res.send({ success: true, message: "Parking booked successfully" });
+            } catch (error) {
+                console.error("Booking error:", error);
+                res.status(500).send({ success: false, message: "Internal server error", error });
+            }
+        });
+        app.get('/booked/:email', async (req, res) => {
+            const email = req.params.email;
+            try {
+                const bookings = await booked.find({ bookedBy: email }).toArray();
+                res.send({ success: true, data: bookings });
+            } catch (error) {
+                console.error("Error fetching bookings:", error);
+                res.status(500).send({ success: false, message: "Server error" });
+            }
         });
 
-        app.post('/users', async (req, res) => {
-            const newUser = req.body;
-            const result = await users.insertOne(newUser);
+        // requested parking's api's
+        app.post('/requested-parkings/add', async (req, res) => {
+            const newRequestedParking = req.body;
+            console.log(newRequestedParking);
+            const result = await requested.insertOne(newRequestedParking);
             res.send(result);
         });
-        app.get('/users/:email', async (req, res) => {
-            const email = req.params.email;
-            const user = await users.findOne({ email });
-            res.send(user);
+        app.get('/requested-parkings', async (req, res) => {
+            const now = new Date();
+            console.log(requested);
+            await requested.deleteMany({
+                $expr: {
+                    $lt: [
+                        { $toDate: "$needFrom" },
+                        now
+                    ]
+                }
+            });
+            console.log(requested);
+            const { area, date, wheels } = req.query;
+            try {
+                const query = {};
+                if (area && area !== "All") {
+                    query.area = area;
+                }
+                if (date && date !== "All") {
+                    const searchDate = new Date(date);
+                    query.$expr = {
+                        $and: [
+                            {
+                                $lte: [
+                                    { $dateTrunc: { date: { $toDate: "$needFrom" }, unit: "day" } },
+                                    searchDate
+                                ]
+                            }
+                        ]
+                    };
+                }
+                if (wheels && wheels !== "Any") {
+                    query.wheels = wheels;
+                }
+                const result = await requested.find(query).toArray();
+                console.log(query, result);
+                res.send({ success: true, data: result });
+            } catch (error) {
+                console.error("Search error:", error);
+                const fallback = await requested.find().toArray();
+                res.send({
+                    success: false,
+                    error: "Something went wrong. Sending all requested parkings as fallback.",
+                    data: fallback
+                });
+            }
         });
-
 
 
         // Send a ping to confirm a successful connection
@@ -149,15 +233,10 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-
-
-
-
 app.get('/status', (req, res) => {
     res.send("fixNpark at Your Service :)")
-})
+});
 
 app.listen(port, () => {
     console.log(`fixNpark is running in port: ${5000}`);
-})
+});

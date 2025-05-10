@@ -4,14 +4,6 @@ import { Link } from "react-router-dom";
 
 
 const Banner = () => {
-    const [search, setSearch] = useState({})
-    const { register, handleSubmit } = useForm();
-
-
-    const onSubmit = data => {
-        console.log(data);
-        setSearch(data);
-    }
 
     return (
         <div className="relative bg-cover bg-center bg-no-repeat bg-fixed bg-[url('../../public/images/woman-choosing-car-car-showroom.jpg')] h-screen flex flex-col items-center justify-center text-white text-center px-4 mb-20">
